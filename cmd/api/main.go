@@ -42,12 +42,14 @@ type application struct {
 
 func main() {
 	var cfg config
+	var addr string
 
 	if os.Getenv("ENV") == "PROD" {
 		flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
 		flag.StringVar(&cfg.env, "env", "production", "Application environment (development|production)")
 		flag.StringVar(&cfg.db.dsn, "dsn", os.Getenv("DATABASE_URL"), "Postgres connection string")
 		flag.StringVar(&cfg.jwt.secret, "jwt-secret", os.Getenv("JWT_SECRET"), "secrt")
+		addr = fmt.Sprintf(":%d", cfg.port)
 	} else {
 		envErr := godotenv.Load(".env")
 		if envErr != nil {
@@ -58,6 +60,7 @@ func main() {
 		flag.StringVar(&cfg.env, "env", "development", "Application environment (development|production)")
 		flag.StringVar(&cfg.db.dsn, "dsn", os.Getenv("DATABASE_URL"), "Postgres connection string")
 		flag.StringVar(&cfg.jwt.secret, "jwt-secret", os.Getenv("JWT_SECRET"), "secrt")
+		addr = fmt.Sprintf("127.0.0.1:%d", cfg.port)
 	}
 	flag.Parse()
 
@@ -76,7 +79,8 @@ func main() {
 	}
 
 	srv := &http.Server{
-		Addr:         fmt.Sprintf("127.0.0.1:%d", cfg.port),
+		// Addr:         fmt.Sprintf("127.0.0.1:%d", cfg.port),
+		Addr:         addr,
 		Handler:      app.routes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
