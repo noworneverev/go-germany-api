@@ -45,11 +45,11 @@ func main() {
 	var addr string
 
 	if os.Getenv("ENV") == "PROD" {
-		flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
+		// flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
 		flag.StringVar(&cfg.env, "env", "production", "Application environment (development|production)")
 		flag.StringVar(&cfg.db.dsn, "dsn", os.Getenv("DATABASE_URL"), "Postgres connection string")
 		flag.StringVar(&cfg.jwt.secret, "jwt-secret", os.Getenv("JWT_SECRET"), "secrt")
-		addr = fmt.Sprintf(":%d", cfg.port)
+		addr = fmt.Sprintf(":%s", os.Getenv("PORT"))
 	} else {
 		envErr := godotenv.Load(".env")
 		if envErr != nil {
