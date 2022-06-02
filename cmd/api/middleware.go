@@ -63,12 +63,12 @@ func (app *application) checkToken(next http.Handler) http.Handler {
 			return
 		}
 
-		if !claims.AcceptAudience("go-germany.com") {
+		if !claims.AcceptAudience("https://noworneverev.github.io/go-germany/") {
 			app.errorJSON(w, errors.New("unauthorized - invalid audience"), http.StatusForbidden)
 			return
 		}
 
-		if claims.Issuer != "go-germany.com" {
+		if claims.Issuer != "https://noworneverev.github.io/go-germany/" {
 			app.errorJSON(w, errors.New("unauthorized - invalid issuer"), http.StatusForbidden)
 			return
 		}

@@ -46,8 +46,8 @@ func (app *application) signIn(w http.ResponseWriter, r *http.Request) {
 	claims.Issued = jwt.NewNumericTime(time.Now())
 	claims.NotBefore = jwt.NewNumericTime(time.Now())
 	claims.Expires = jwt.NewNumericTime(time.Now().Add(24 * time.Hour))
-	claims.Issuer = "go-germany.com"
-	claims.Audiences = []string{"go-germany.com"}
+	claims.Issuer = "https://noworneverev.github.io/go-germany/"
+	claims.Audiences = []string{"https://noworneverev.github.io/go-germany/"}
 
 	jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
 	if err != nil {
