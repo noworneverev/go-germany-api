@@ -12,8 +12,8 @@ func (m *DBModel) InsertContent(content Content) error {
 	stmt := `insert into content (id, link, title, author, published_date, source, 
 		author_bs_school, author_bs_school_short, author_bs_department, author_bs_gpa,
 		author_ms_school, author_ms_school_short, author_ms_department, author_ms_gpa,
-		author_toefl, author_ielts, author_gre, author_gmat, author_testdaf, author_goethe, course_type)
-		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)`
+		author_toefl, author_ielts, author_gre, author_gmat, author_testdaf, author_goethe, course_type, content)
+		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		content.ID,
@@ -37,6 +37,7 @@ func (m *DBModel) InsertContent(content Content) error {
 		content.AuthorTestdaf,
 		content.AuthorGoethe,
 		content.CourseType,
+		content.Content,
 	)
 
 	if err != nil {

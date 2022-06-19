@@ -37,6 +37,7 @@ func (app *application) editContent(w http.ResponseWriter, r *http.Request) {
 	c.AuthorTestdaf = r.FormValue("authorTestdaf")
 	c.AuthorGoethe = r.FormValue("authorGoethe")
 	c.CourseType = r.FormValue("courseType")
+	c.Content = r.FormValue("content")
 
 	err := app.models.DB.InsertContent(c)
 	if err != nil {

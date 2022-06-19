@@ -129,7 +129,7 @@ func (m *DBModel) GetArticles(ap ArticleParams) ([]*Article, int, error) {
 	baseQueryString := `select c.id, c.link, c.title, c.author, c.published_date, c.source, 
 	c.author_bs_school, c.author_bs_school_short, c.author_bs_department, c.author_bs_gpa,
 	c.author_ms_school, c.author_ms_school_short, c.author_ms_department, c.author_ms_gpa,
-	c.author_toefl, c.author_ielts, c.author_gre, c.author_gmat, c.author_testdaf, c.author_goethe, c.course_type
+	c.author_toefl, c.author_ielts, c.author_gre, c.author_gmat, c.author_testdaf, c.author_goethe, c.course_type, c.content
 	from content c`
 
 	srcarr := strings.Split(ap.Sources, ",")
@@ -161,7 +161,8 @@ func (m *DBModel) GetArticles(ap ArticleParams) ([]*Article, int, error) {
 	if len(ap.SearchTerm) > 0 {
 		likeSearchTerm = fmt.Sprintf(`(lower(c.author) like '%%%[1]s%%' or lower(c.title) like '%%%[1]s%%' or lower(c.source) like '%%%[1]s%%' or 
 		lower(c.author_bs_school) like '%%%[1]s%%' or lower(c.author_bs_school_short) like '%%%[1]s%%' or lower(c.author_bs_department) like '%%%[1]s%%' or 
-		lower(c.author_ms_school) like '%%%[1]s%%' or lower(c.author_ms_school_short) like '%%%[1]s%%' or lower(c.author_ms_department) like '%%%[1]s%%')`, ap.SearchTerm)
+		lower(c.author_ms_school) like '%%%[1]s%%' or lower(c.author_ms_school_short) like '%%%[1]s%%' or lower(c.author_ms_department) like '%%%[1]s%%' or
+		lower(c.content) like '%%%[1]s%%')`, ap.SearchTerm)
 		whereArr = append(whereArr, likeSearchTerm)
 	}
 
@@ -266,6 +267,7 @@ func ScanArticles(rows *sql.Rows) (Article, error) {
 		&article.AuthorTestdaf,
 		&article.AuthorGoethe,
 		&article.CourseType,
+		&article.Content,
 	)
 	return article, err
 }

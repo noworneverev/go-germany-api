@@ -92,6 +92,7 @@ type Article struct {
 	Result              string          `json:"result"`
 	IsDecision          bool            `json:"is_decision"`
 	ArticleCourse       []ArticleCourse `json:"courses"`
+	Content             string          `json:"content"`
 }
 
 // CourseArticle is the type for course article
@@ -200,4 +201,5 @@ type Content struct {
 	AuthorTestdaf       string    `json:"author_testdaf"`
 	AuthorGoethe        string    `json:"author_goethe"`
 	CourseType          string    `json:"course_type"`
+	Content             string    `json:"Content"`
 }
