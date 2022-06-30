@@ -73,7 +73,8 @@ func (article *Article) SetCourses(m *DBModel, ctx context.Context) error {
 	from article as a
 	left join course as c on c.id = a.course_id 
 	left join university as u on u.id = c.university_id
-	where a.id = $1`
+	where a.id = $1	
+	order by array_position(array['Admission','Rejection'], a.result), a.is_decision desc`
 
 	courseRows, _ := m.DB.QueryContext(ctx, courseQuery, article.ID)
 
