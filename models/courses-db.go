@@ -247,12 +247,12 @@ func (m *DBModel) All(cp CourseParams) ([]*Course, int, error) {
 		whereArr = append(whereArr, inSubject)
 	}
 
-	if cp.IsTu9 {
+	if cp.IsTu9 && cp.IsU15 {
+		whereArr = append(whereArr, "(u.is_tu9 or u.is_u15)")
+	} else if cp.IsTu9 {
 		isTu9 = "(u.is_tu9)"
 		whereArr = append(whereArr, isTu9)
-	}
-
-	if cp.IsU15 {
+	} else if cp.IsU15 {
 		isU15 = "(u.is_u15)"
 		whereArr = append(whereArr, isU15)
 	}
