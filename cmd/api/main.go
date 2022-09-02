@@ -13,6 +13,7 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/urfave/negroni"
 )
 
 const version = "1.0.0"
@@ -78,10 +79,14 @@ func main() {
 		models: models.NewModels(db),
 	}
 
+	n := negroni.Classic() // Includes some default middlewares
+	n.UseHandler(app.routes())
+
 	srv := &http.Server{
 		// Addr:         fmt.Sprintf("127.0.0.1:%d", cfg.port),
-		Addr:         addr,
-		Handler:      app.routes(),
+		Addr: addr,
+		// Handler:      app.routes(),
+		Handler:      n,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

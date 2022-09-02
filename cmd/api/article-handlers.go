@@ -4,6 +4,7 @@ import (
 	"backend/models"
 	"encoding/json"
 	"errors"
+	"log"
 	"math"
 	"net/http"
 	"strconv"
@@ -36,6 +37,7 @@ func (app *application) getOneArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) getAllArticles(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET /v1/articles", r.URL.Query())
 	pn, err := strconv.Atoi(r.URL.Query().Get("pageNumber"))
 	if err != nil {
 		app.errorJSON(w, err)
