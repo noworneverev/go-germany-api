@@ -194,7 +194,8 @@ func (m *DBModel) All(cp CourseParams) ([]*Course, int, error) {
 	left join article as a on a.course_id = c.id`
 
 	csarr := strings.Split(cp.CourseTypes, ",")
-	usarr := strings.Split(cp.Institutions, ",")
+	// usarr := strings.Split(cp.Institutions, ",")
+	usarr := strings.Split(cp.Institutions, ";")
 	// subarr := strings.Split(cp.Subjects, ",")
 	subarr := strings.Split(cp.Subjects, ";")
 	lngarr := strings.Split(cp.Languages, ",")
